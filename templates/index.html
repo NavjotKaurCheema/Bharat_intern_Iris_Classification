@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flower Predictor</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #eaf8e4;
+            text-align: center;
+            margin: 50px;
+        }
+
+        .project-heading {
+            font-size: 36px;
+            margin-bottom: 20px;
+            color: #006400; 
+            text-shadow: 2px 2px 4px #98fb98;
+        }
+
+        form {
+            max-width: 400px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f0fff0;
+            border-radius: 8px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: #333;
+        }
+
+        input {
+            width: calc(100% - 26px);
+            padding: 12px;
+            margin-bottom: 16px;
+            box-sizing: border-box;
+            border: 2px solid #3498db;
+            border-radius: 6px;
+            outline: none;
+            display: inline-block;
+        }
+
+        .arrow {
+            display: inline-block;
+            vertical-align: middle;
+            cursor: pointer;
+        }
+
+        input[type="submit"] {
+            background-color: #2ecc71;
+            color: #fff;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #27ae60;
+        }
+
+        .result {
+            margin-top: 20px;
+            font-size: 20px;
+            font-weight: bold;
+            color: #333;
+        }
+
+        .flower-image {
+            max-width: 100%;
+            height: auto;
+            margin-top: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+        }
+    </style>
+</head>
+<body>
+    <div class="project-heading">🌺🌸 Iris Flower Classification Project 🌼🌷</div>
+    <form action="/predict" method="POST">
+        <label for="SepalLengthCm">Sepal Length (cm):</label>
+        <input type="number" name="SepalLengthCm" id="SepalLengthCm" required>
+        <span class="arrow" onclick="changeValue('SepalLengthCm', -1)"></span>
+        <span class="arrow" onclick="changeValue('SepalLengthCm', 1)"></span>
+
+        <label for="SepalWidthCm">Sepal Width (cm):</label>
+        <input type="number" name="SepalWidthCm" id="SepalWidthCm" required>
+        <span class="arrow" onclick="changeValue('SepalWidthCm', -1)"></span>
+        <span class="arrow" onclick="changeValue('SepalWidthCm', 1)"></span>
+
+        <label for="PetalLengthCm">Petal Length (cm):</label>
+        <input type="number" name="PetalLengthCm" id="PetalLengthCm" required>
+        <span class="arrow" onclick="changeValue('PetalLengthCm', -1)"></span>
+        <span class="arrow" onclick="changeValue('PetalLengthCm', 1)"></span>
+
+        <label for="PetalWidthCm">Petal Width (cm):</label>
+        <input type="number" name="PetalWidthCm" id="PetalWidthCm" required>
+        <span class="arrow" onclick="changeValue('PetalWidthCm', -1)"></span>
+        <span class="arrow" onclick="changeValue('PetalWidthCm', 1)"></span>
+
+        <input type="submit" value="Predict">
+
+        <div class="result">Class: {{result}}</div>
+
+        <!-- Display the corresponding image based on the predicted class -->
+        {% if result == 'Iris-setosa' %}
+            <img class="flower-image" src="{{ url_for('static', filename='IMG/Iris-setosa.png') }}" alt="Iris-setosa">
+        {% elif result == 'Iris-versicolor' %}
+            <img class="flower-image" src="{{ url_for('static', filename='IMG/Iris-versicolor.png') }}" alt="Iris-versicolor">
+        {% elif result == 'Iris-virginica' %}
+            <img class="flower-image" src="{{ url_for('static', filename='IMG/Iris-virginica.png') }}" alt="Iris-virginica">
+        {% endif %}
+    </form>
+
+    <script>
+        function changeValue(inputId, change) {
+            var inputElement = document.getElementById(inputId);
+            inputElement.value = Math.max(0, parseFloat(inputElement.value) + change);
+        }
+    </script>
+</body>
+</html>
