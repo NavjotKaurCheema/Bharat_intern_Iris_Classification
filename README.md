@@ -1,4 +1,4 @@
-# Bharat_intern_Iris_Classification
+# Iris_Flower_Classification
 🌺🌸 Iris Flower Classification Project 🌼🌷
 
 
